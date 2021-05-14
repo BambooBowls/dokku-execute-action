@@ -1,0 +1,28 @@
+name: "Dokku execute action"
+author: "Jasper John Cinatad"
+description: "execute dokku command"
+branding:
+  icon: "upload-cloud"
+  color: "green"
+inputs:
+  ssh-private-key:
+    description: "The ssh private key to the dokku instance. WARNING: use a secret! Do not pass a plain text value!"
+    required: true
+  dokku-user:
+    description: "The user to use for ssh (Default: dokku)"
+    required: false
+    default: "dokku"
+  dokku-host:
+    description: "The dokku host to ssh into"
+    required: true
+  dokku-command:
+    description: "Dokku command to run"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.ssh-private-key }}
+    - ${{ inputs.dokku-user }}
+    - ${{ inputs.dokku-host }}
+    - ${{ inputs.dokku-command }}
